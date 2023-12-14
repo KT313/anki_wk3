@@ -1,0 +1,91 @@
+<script>
+// v1.1.8 - https://github.com/SimonLammer/anki-persistence/blob/584396fea9dea0921011671a47a0fdda19265e62/script.js
+if(void 0===window.Persistence){var e="github.com/SimonLammer/anki-persistence/",t="_default";if(window.Persistence_sessionStorage=function(){var i=!1;try{"object"==typeof window.sessionStorage&&(i=!0,this.clear=function(){for(var t=0;t<sessionStorage.length;t++){var i=sessionStorage.key(t);0==i.indexOf(e)&&(sessionStorage.removeItem(i),t--)}},this.setItem=function(i,n){void 0==n&&(n=i,i=t),sessionStorage.setItem(e+i,JSON.stringify(n))},this.getItem=function(i){return void 0==i&&(i=t),JSON.parse(sessionStorage.getItem(e+i))},this.removeItem=function(i){void 0==i&&(i=t),sessionStorage.removeItem(e+i)},this.getAllKeys=function(){for(var t=[],i=Object.keys(sessionStorage),n=0;n<i.length;n++){var s=i[n];0==s.indexOf(e)&&t.push(s.substring(e.length,s.length))}return t.sort()})}catch(n){}this.isAvailable=function(){return i}},window.Persistence_windowKey=function(i){var n=window[i],s=!1;"object"==typeof n&&(s=!0,this.clear=function(){n[e]={}},this.setItem=function(i,s){void 0==s&&(s=i,i=t),n[e][i]=s},this.getItem=function(i){return void 0==i&&(i=t),void 0==n[e][i]?null:n[e][i]},this.removeItem=function(i){void 0==i&&(i=t),delete n[e][i]},this.getAllKeys=function(){return Object.keys(n[e])},void 0==n[e]&&this.clear()),this.isAvailable=function(){return s}},window.Persistence=new Persistence_sessionStorage,Persistence.isAvailable()||(window.Persistence=new Persistence_windowKey("py")),!Persistence.isAvailable()){var i=window.location.toString().indexOf("title"),n=window.location.toString().indexOf("main",i);i>0&&n>0&&n-i<10&&(window.Persistence=new Persistence_windowKey("qt"))}}
+
+</script>
+
+<div id="front">
+
+<span id="level">1</span>
+<div id="question-display">{{Characters}}</div>
+<div id="question-name"></div>
+<script>document.getElementById("typeansMeaning").focus();</script>
+	<div id="typeandMeaningdiv"><input class="input" id="typeansMeaning" size=20 autofocus></input></div>
+
+	<div id="typeandReadingdiv"><input class="input" id="typeansReading" size=20></input></div>
+	
+
+<div class="invis_submit" style="display:none">{{type:card_id}}</div>
+
+<!-- Level indicator -->
+<script>
+var level = `{{Tags}}`.match(/Lesson_(\d+)/)[1];
+document.getElementById("level").innerHTML = level;
+</script>
+
+<!-- Kana input -->
+<script src="_wanakana.min.js"></script>
+<script>
+var answerDivMeaning = document.getElementById("typeansMeaning");
+if (answerDivMeaning !== null) {
+	answerDivMeaning.setAttribute("placeholder", "Meaning");
+}
+var answerDivReading = document.getElementById("typeansReading");
+if (answerDivReading !== null) {
+	answerDivReading.setAttribute("placeholder", "Reading");
+	wanakana.bind(answerDivReading);
+	answerDivReading.style.fontFamily = "Hiragino Kaku Gothic Pro W3";
+}
+</script>
+
+<script>
+var questionName = " ";
+if ("{{Card_Type}}" === "Radical") {
+	questionName = "";
+}
+
+var questionNameDiv = document.getElementById("question-name");
+questionNameDiv.innerHTML = " </br><b>" + questionName + "</b>";
+var questionDisplayDiv = document.getElementById("question-display");
+
+
+if ("{{Card_Type}}" == "Radical") {
+	questionDisplayDiv.classList.add("radical");
+} else if ("{{Card_Type}}" == "Kanji") {
+	questionDisplayDiv.classList.add("kanji");
+} else if ("{{Card_Type}}" == "Vocabulary") {
+	questionDisplayDiv.classList.add("vocabulary");
+}
+
+if ("{{Card_Type}}" == "Radical") {
+	questionNameDiv.classList.add("");
+} else {
+	questionNameDiv.classList.add("");
+}
+</script>
+
+
+
+</div>
+<script>
+async function asyncCall() {
+    setTimeout(function() {
+    Persistence.setItem("MeaningGuess", document.getElementById("typeansMeaning").value);
+    Persistence.setItem("ReadingGuess", document.getElementById("typeansReading").value);
+}, 10);
+
+}
+
+document.getElementById("typeansMeaning").addEventListener("keypress", function(event) {
+    Persistence.setItem("MeaningGuess", document.getElementById("typeansMeaning").value);
+    Persistence.setItem("ReadingGuess", document.getElementById("typeansReading").value);
+    asyncCall();
+});
+document.getElementById("typeansReading").addEventListener("keypress", function(event) {    
+    Persistence.setItem("MeaningGuess", document.getElementById("typeansMeaning").value);
+    Persistence.setItem("ReadingGuess", document.getElementById("typeansReading").value);
+    asyncCall();
+});
+
+</script>
+
