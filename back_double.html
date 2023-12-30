@@ -225,7 +225,7 @@ if (combinations.length === 0) {
 
 <!--SCRIPT: Slice and add context sentences.-->
 <script>
-if ("{{Card_Type}}" == "Vocabulary") {
+if ("{{Card_Type}}" == "Vocabulary" || "{{Card_Type}}" == "Kana_Vocabulary") {
 	var sentences = `{{Context_Sentences}}`;
 	var array = sentences.split("|");
 
@@ -262,7 +262,7 @@ if ("{{Card_Type}}" === "Kanji") {
 	contextsection.style.display = "none";
 	compositionsection.style.display = "none";
 } 
-if ("{{Card_Type}}" === "Vocabulary") {
+if ("{{Card_Type}}" == "Vocabulary" || "{{Card_Type}}" == "Kana_Vocabulary") {
 	combinationsection.style.display = "none";
 	foundinvocabularysection.style.display = "none";
 } 
@@ -312,7 +312,7 @@ if ("{{Card_Type}}" == "Radical") {
 			div.appendChild(element);
 		}
 	}
-} else if ("{{Card_Type}}" == "Vocabulary") {
+} else if ("{{Card_Type}}" == "Vocabulary" || "{{Card_Type}}" == "Kana_Vocabulary") {
 	var character = `{{Components_Characters}}`;
 	var characterarray = character.split(", ");
 	var meaning = "{{Components_Meaning}}";
