@@ -57,6 +57,12 @@ if ("{{Card_Type}}" == "Radical") {
 	questionDisplayDiv.classList.add("vocabulary");
 }
 
+if ("{{Card_Type}}" == "Radical" || "{{Card_Type}}" == "Kana_Vocabulary") {
+	typeandReadingdiv.style.visibility='hidden'
+} else {
+	typeandReadingdiv.style.visibility='visible'
+}
+
 if ("{{Card_Type}}" == "Radical") {
 	questionNameDiv.classList.add("");
 } else {
